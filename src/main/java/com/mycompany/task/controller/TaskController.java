@@ -26,9 +26,11 @@ public class TaskController {
     public ResponseEntity<Task> getById (@PathVariable Long id) {
         return service.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
+
     @PostMapping
-    public ResponseEntity<Task> create(@RequestBody Task task){
-        return ResponseEntity.ok(service.save(task));
+    public ResponseEntity<String> create(@RequestBody Task task){
+        service.save(task);
+        return ResponseEntity.status(201).body("Task created");
     }
 
     @DeleteMapping("/{id}")
@@ -42,14 +44,8 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody Task task) {
-
-        return service.findById(id)
-                .map(existing -> {
-                    task.setId(id);               // on écrase l'id
-                    return ResponseEntity.ok(
-                            service.save(task)    // save = update ici
-                    );
-                })
+        return service.update(id, task)
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 }

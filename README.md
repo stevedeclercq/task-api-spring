@@ -1,14 +1,25 @@
 # Task API (Spring Boot)
 
-API REST simple de gestion de tâches : créer des tâches avec une description et suivre leur état (fait / non fait).
+API REST de gestion de tâches développée avec Spring Boot.
+L’application permet de créer, modifier, consulter et supprimer des tâches, avec gestion de relations entre entités : catégories, priorités, statuts et tags.
+Ce projet met en pratique une architecture backend en couches avec Controller, Service, Repository, JPA/Hibernate et une base H2 en mémoire.
 
 ## Fonctionnalités
-- CRUD complet : Create / Read / Update / Delete
-- Création d’une tâche
-- Lecture de toutes les tâches ou d’une tâche par id
-- Mise à jour complète d’une tâche (PUT)
+
+- CRUD complet sur les tâches : Create / Read / Update / Delete
+- CRUD sur les entités liées :
+    - Categories
+    - Priorities
+    - Statuses
+    - Tags
+- Gestion des relations JPA :
+    - Task → Category : ManyToOne
+    - Task → Priority : ManyToOne
+    - Task → Status : ManyToOne
+    - Task → Tags : ManyToMany
+- Création d’une tâche avec ses relations via JSON
+- Mise à jour complète d’une tâche avec PUT
 - Suppression d’une tâche
-- Champs : `description` (String), `done` (boolean)
 
 ## Tech stack
 - Java
@@ -43,11 +54,16 @@ http://localhost:8080
 
 ### Créer une tâche
 POST /api/tasks
-
-Body (JSON) :
 {
-"description": "Ma tâche",
-"done": false
+"title": "Ma première tâche",
+"description": "Description de test",
+"done": false,
+"category": { "id": 1 },
+"priority": { "id": 1 },
+"status": { "id": 1 },
+"tags": [
+{ "id": 1 }
+]
 }
 
 ---
@@ -76,3 +92,11 @@ Body (JSON) :
 ### Supprimer une tâche
 DELETE /api/tasks/{id}
 
+### Endpoints des entités liées
+
+Les entités suivantes disposent également d’endpoints CRUD :
+
+- `/api/categories`
+- `/api/priorities`
+- `/api/statuses`
+- `/api/tags`

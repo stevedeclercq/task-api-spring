@@ -35,4 +35,11 @@ public class TagService{
         repo.deleteById(id);
         return true;
     }
+
+    public Optional<Tag>update(Long id, Tag incoming){
+        return repo.findById(id).map
+                (existing->
+                {existing.setLabel(incoming.getLabel());
+        return repo.save(existing);    });
+    }
 }

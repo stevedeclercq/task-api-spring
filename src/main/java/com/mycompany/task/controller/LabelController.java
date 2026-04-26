@@ -1,40 +1,40 @@
 package com.mycompany.task.controller;
 
-import com.mycompany.task.entity.Tag;
-import com.mycompany.task.service.TagService;
+import com.mycompany.task.entity.Label;
+import com.mycompany.task.service.LabelService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tags")
-public class TagController{
+@RequestMapping("/api/labels")
+public class LabelController {
 
-    private final TagService service;
+    private final LabelService service;
 
-    public TagController(TagService service){
+    public LabelController(LabelService service){
         this.service=service;
     }
 
     @GetMapping
-    public List<Tag> findAll(){
+    public List<Label>findAll(){
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tag> findById(@PathVariable Long id){
+    public ResponseEntity<Label> findById(@PathVariable Long id){
         return service.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Tag>create(@RequestBody Tag tag){
-        Tag saved = service.save(tag);
-        return ResponseEntity.ok(saved);
+    public Label create(@Valid @RequestBody Label label){
+        return service.create(label);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void>delete(@PathVariable Long id){
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
         if(service.deleteById(id)){
             return ResponseEntity.noContent().build();
         }
@@ -42,8 +42,8 @@ public class TagController{
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tag>update(@PathVariable Long id,@RequestBody Tag tag){
-        return service.update(id, tag)
+    public ResponseEntity<Label> update(@PathVariable Long id,@Valid @RequestBody Label label){
+        return service.update( id, label)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
