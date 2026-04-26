@@ -54,17 +54,19 @@ http://localhost:8080
 
 ### Créer une tâche
 POST /api/tasks
+```json
 {
-"title": "Ma première tâche",
-"description": "Description de test",
-"done": false,
-"category": { "id": 1 },
-"priority": { "id": 1 },
-"status": { "id": 1 },
-"tags": [
-{ "id": 1 }
-]
+  "title": "Ma première tâche",
+  "description": "Description de test",
+  "done": false,
+  "category": { "id": 1 },
+  "priority": { "id": 1 },
+  "status": { "id": 1 },
+  "tags": [
+    { "id": 1 }
+  ]
 }
+```
 
 ---
 
@@ -80,13 +82,12 @@ GET /api/tasks/{id}
 
 ### Mettre à jour une tâche
 PUT /api/tasks/{id}
-
-Body (JSON) :
+```json
 {
 "description": "Tâche modifiée",
 "done": true
 }
-
+```
 ---
 
 ### Supprimer une tâche
