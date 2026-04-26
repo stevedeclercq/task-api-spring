@@ -53,7 +53,10 @@ http://localhost:8080
 ## Endpoints
 
 ### Créer une tâche
+### Créer une tâche
+
 POST /api/tasks
+
 ```json
 {
   "title": "Ma première tâche",
@@ -82,10 +85,12 @@ GET /api/tasks/{id}
 
 ### Mettre à jour une tâche
 PUT /api/tasks/{id}
+Body (JSON) :
+
 ```json
 {
-"description": "Tâche modifiée",
-"done": true
+  "description": "Tâche modifiée",
+  "done": true
 }
 ```
 ---
