@@ -1,5 +1,7 @@
 package com.mycompany.task.controller;
 
+import com.mycompany.task.dto.TaskRequestDTO;
+import com.mycompany.task.dto.TaskResponseDTO;
 import com.mycompany.task.entity.Task;
 import com.mycompany.task.service.TaskService;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +20,8 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> findAll(){
-        return service.findAll();
+    public List<TaskResponseDTO> findAll(){
+        return service.findAllDTO();
     }
 
     @GetMapping("/{id}")
@@ -28,8 +30,8 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody Task task){
-        service.save(task);
+    public ResponseEntity<String> create(@RequestBody TaskRequestDTO dto){
+        service.save(dto);
         return ResponseEntity.status(201).body("Task created");
     }
 
@@ -43,8 +45,8 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody Task task) {
-        return service.update(id, task)
+    public ResponseEntity<TaskResponseDTO> update(@PathVariable Long id, @RequestBody TaskRequestDTO dto) {
+        return service.update(id, dto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
