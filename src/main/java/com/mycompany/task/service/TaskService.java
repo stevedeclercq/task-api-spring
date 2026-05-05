@@ -180,4 +180,9 @@ public class TaskService {
         });
     }
 
+    public Optional<TaskResponseDTO> findByIdDTO(Long id){
+        return repo.findById(id)
+                .map(this::mapToResponseDTO);
+    }
+
 }
